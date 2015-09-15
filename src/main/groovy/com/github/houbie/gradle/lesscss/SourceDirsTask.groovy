@@ -29,7 +29,9 @@ import org.gradle.api.tasks.util.PatternSet
  * A {@code SourceDirsTask} performs some operation on files within source directories.
  */
 class SourceDirsTask extends ConventionTask implements PatternFilterable {
-    private final List sourceDirs = []
+
+	private final List importDirs = []
+	private final List sourceDirs = []
     private final PatternFilterable patternSet = new PatternSet()
 
     /**
@@ -45,7 +47,6 @@ class SourceDirsTask extends ConventionTask implements PatternFilterable {
 
     List<File> getSourceDirs() {
         sourceDirs.collect { project.file(it) }
-
     }
 
     /**
@@ -71,6 +72,36 @@ class SourceDirsTask extends ConventionTask implements PatternFilterable {
             inputs.sourceDir(sourceDir)
         }
         return this
+    }
+
+
+    List<File> getImportDirs() {
+    	importDirs.collect { project.file(it) }
+    }
+
+    /**
+     * Sets the source directory for this task. The given dir object is evaluated as per {@link org.gradle.api.Project#files(Object ...)}.
+     *
+     * @param includeDir The source.
+     */
+    void setImportDir(Object importDir) {
+    	importDirs.clear()
+    	importDirs << importDir
+    	inputs.sourceDir(importDir)
+    }
+
+    /**
+     * Adds some source directories to this task. The given dir objects will be evaluated as per {@link org.gradle.api.Project#files(Object ...)}.
+     *
+     * @param sourceDirs The source to add
+     * @return this
+     */
+    SourceDirsTask importDir(Object... importDirs) {
+    	for (importDir in importDirs) {
+    		this.importDirs << importDir
+    		inputs.sourceDir(importDir)
+    	}
+    	return this
     }
 
     /**
