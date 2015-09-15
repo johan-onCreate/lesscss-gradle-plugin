@@ -1,3 +1,6 @@
+.classpath
+.project
+.settings/
 userHome
 build/
 out/
@@ -6,3 +9,4 @@ out/
 *.ipr
 *.iws
 .idea/
+/bin/
