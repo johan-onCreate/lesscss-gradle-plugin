@@ -79,7 +79,8 @@ class IntegrationSpec extends Specification {
         projectConnection.newBuild().forTasks("dependsOnLessc").setStandardOutput(stdout).run();
 
         then:
-        stdout.toString().contains(':lessc UP-TO-DATE\n:dependsOnLessc UP-TO-DATE')
+        stdout.toString().contains(":lessc UP-TO-DATE")
+        stdout.toString().contains(":dependsOnLessc UP-TO-DATE")
     }
 
     def 'lessc daemon'() {

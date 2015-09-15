@@ -19,6 +19,7 @@ package com.github.houbie.gradle.lesscss
 import com.github.houbie.lesscss.LessParseException
 import com.github.houbie.lesscss.Options
 import com.github.houbie.lesscss.builder.CompilationUnit
+import org.apache.tools.ant.BuildException
 import org.gradle.api.Project
 import org.gradle.api.file.FileTreeElement
 import org.gradle.testfixtures.ProjectBuilder
@@ -125,6 +126,34 @@ class LesscTaskSpec extends Specification {
         new File(projectDir, 'out/basic.css').text == new File(lessDir, 'basic.css').text
         new File(projectDir, 'out/import.css').text == new File(lessDir, 'import.css').text
     }
+
+    def 'compile less files with importDir'() {
+        project.lessc {
+            destinationDir = project.file('out')
+            importDir "$projectRelativeLessDir/importDir"
+            sourceDir projectRelativeLessDir
+            include 'usesImport.less'
+        }
+
+        project.tasks.findByName('lessc').run()
+
+        expect:
+        new File(projectDir, 'out').list() == ['usesImport.css']
+    }
+
+    def 'compile less files without importDir fails'() {
+        project.lessc {
+            destinationDir = project.file('out')
+            sourceDir projectRelativeLessDir
+            include 'usesImport.less'
+        }
+
+        project.tasks.findByName('lessc').run()
+
+        expect:
+        thrown(LessParseException)
+    }
+
 
     def 'compile broken less'() {
         project.lessc {
