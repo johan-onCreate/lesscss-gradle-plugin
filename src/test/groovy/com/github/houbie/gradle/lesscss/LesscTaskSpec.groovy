@@ -153,7 +153,6 @@ class LesscTaskSpec extends Specification {
 
         then:
         LessParseException e = thrown()
-
         e.message.startsWith "less parse exception: 'onlyVariables.less' wasn't found\n" +
                      "in usesImport.less at line 1\n"
     }

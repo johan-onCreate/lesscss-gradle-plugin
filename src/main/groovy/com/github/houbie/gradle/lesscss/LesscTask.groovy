@@ -117,7 +117,7 @@ class LesscTask extends SourceDirsTask {
                 logger.debug("Creating less CompilationUnit src: $src, dest $dest")
                 def includePaths = (visitDetail.file.parentFile) ? sourceDirs + visitDetail.file.parentFile : sourceDirs
 
-                // Added support for including a path to less variable folder
+                // Added support for including directories to less variable folder used with import. These won't be processed to css files.
                 includePaths += importDirs;
 
                 def resourceReader = new FileSystemResourceReader(encoding, includePaths as File[])

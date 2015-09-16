@@ -74,6 +74,7 @@ lessc {
     lesscExecutable = "$userHome\\AppData\\Roaming\\npm\\lessc.cmd" //The executable to use for the commandline engine. Default: 'lessc' (typically OK on UN*X)
     customJavaScript = file("custom.js").text //javascript that can provide functions to the less compiler. Default: null
     encoding = "utf-8" //encoding used to read less files. Default: null (platform encoding)
+    importDir [] // Add extra paths to directories where typical less variable files are. This simplifies the use of import, since we can use an import relative to these importDirs.
 
     //standard LESS options
     /////////////////////////
