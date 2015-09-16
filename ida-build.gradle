@@ -9,5 +9,6 @@ buildscript {
 }
 
 apply plugin: "com.iipax.maven-publish"
+apply plugin: 'eclipse'
 
 apply from: "build.gradle"
