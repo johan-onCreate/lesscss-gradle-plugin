@@ -30,8 +30,8 @@ import org.gradle.api.tasks.util.PatternSet
  */
 class SourceDirsTask extends ConventionTask implements PatternFilterable {
 
-	private final List importDirs = []
-	private final List sourceDirs = []
+  private final List importDirs = []
+  private final List sourceDirs = []
     private final PatternFilterable patternSet = new PatternSet()
 
     /**
@@ -74,34 +74,38 @@ class SourceDirsTask extends ConventionTask implements PatternFilterable {
         return this
     }
 
-
+    /**
+     * Get extra import dirs, if any
+     * @return the configured importDir as List<File>
+     */
     List<File> getImportDirs() {
-    	importDirs.collect { project.file(it) }
+      importDirs.collect { project.file(it) }
     }
 
     /**
-     * Sets the source directory for this task. The given dir object is evaluated as per {@link org.gradle.api.Project#files(Object ...)}.
+     * Sets the import directory for this task. The given dir object will be used as a include path,
+     * but its less content will not be processed to css.
      *
-     * @param includeDir The source.
+     * @param importDir The import dir path
      */
     void setImportDir(Object importDir) {
-    	importDirs.clear()
-    	importDirs << importDir
-    	inputs.sourceDir(importDir)
+      importDirs.clear()
+      importDirs << importDir
+      inputs.sourceDir(importDir)
     }
 
     /**
-     * Adds some source directories to this task. The given dir objects will be evaluated as per {@link org.gradle.api.Project#files(Object ...)}.
+     * Adds some import directories to this task. The given dir objects will be used as includes (but not be processed to css)
      *
-     * @param sourceDirs The source to add
+     * @param importDirs The import dir to add
      * @return this
      */
     SourceDirsTask importDir(Object... importDirs) {
-    	for (importDir in importDirs) {
-    		this.importDirs << importDir
-    		inputs.sourceDir(importDir)
-    	}
-    	return this
+      for (importDir in importDirs) {
+        this.importDirs << importDir
+        inputs.sourceDir(importDir)
+      }
+      return this
     }
 
     /**
