@@ -30,8 +30,8 @@ import org.gradle.api.tasks.util.PatternSet
  */
 class SourceDirsTask extends ConventionTask implements PatternFilterable {
 
-  private final List importDirs = []
-  private final List sourceDirs = []
+    private final List importDirs = []
+    private final List sourceDirs = []
     private final PatternFilterable patternSet = new PatternSet()
 
     /**
