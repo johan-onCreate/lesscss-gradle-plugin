@@ -148,10 +148,14 @@ class LesscTaskSpec extends Specification {
             include 'usesImport.less'
         }
 
+        when:
         project.tasks.findByName('lessc').run()
 
-        expect:
-        thrown(LessParseException)
+        then:
+        LessParseException e = thrown()
+
+        e.message.startsWith "less parse exception: 'onlyVariables.less' wasn't found\n" +
+                     "in usesImport.less at line 1\n"
     }
 
 
